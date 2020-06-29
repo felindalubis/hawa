@@ -28,19 +28,4 @@ struct WeatherModel {
             return"sun.min"
         }
     }
-    
-    var hawaQuote : String {
-        switch id {
-        case 200...321:
-            return "Let's go to bed, grab the blanket & watch netflix!"
-        case 500...531:
-            return "Indomie kuah would be great!"
-        case 600...622:
-            return "Don't forget to turn on the warmer & grab the blanket"
-        case 700...804:
-            return "It's a good day to just relax or do some activity!"
-        default:
-            return "It's a good day to just relax or do some activity!"
-        }
-    }
 }

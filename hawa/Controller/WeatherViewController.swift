@@ -20,6 +20,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var humidLabel: UILabel!
     @IBOutlet weak var quoteLabel: UILabel!
+    @IBOutlet weak var charLabel: UILabel!
     
     var weatherManager = WeatherManager()
     var locationManager = CLLocationManager()
@@ -44,10 +45,12 @@ class WeatherViewController: UIViewController {
 
 extension WeatherViewController : UITextFieldDelegate {
     @IBAction func searchPressed(_ sender: UIButton) {        weatherManager.fetchWeather(searchTextField.text!)
+        weatherManager.fetchQuote()
         searchTextField.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {        weatherManager.fetchWeather(searchTextField.text!)
+        weatherManager.fetchQuote()
         searchTextField.endEditing(true)
         return true
     }
@@ -77,7 +80,13 @@ extension WeatherViewController : WeatherManagerDelegate {
             self.descLabel.text = weather.desc
             self.mainLabel.text = weather.main
             self.humidLabel.text = "\(String (weather.humidity))%"
-            self.quoteLabel.text = "\"\(weather.hawaQuote)\""
+        }
+    }
+    
+    func updateQuote(_ manager: WeatherManager, _ quote: QuoteModel) {
+        DispatchQueue.main.async {
+            self.quoteLabel.text = quote.result[0].quote
+            self.charLabel.text = quote.result[0].character
         }
     }
     
@@ -90,14 +99,13 @@ extension WeatherViewController : WeatherManagerDelegate {
 
 extension WeatherViewController: CLLocationManagerDelegate {
     
-    
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
             weatherManager.fetchWeather(lat, lon)
+            weatherManager.fetchQuote()
         }
     }
     

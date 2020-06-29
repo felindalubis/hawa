@@ -17,6 +17,7 @@
 		3E771D30249E960A00FC0FD3 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E771D2F249E960A00FC0FD3 /* WeatherModel.swift */; };
 		3E771D32249E98D000FC0FD3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E771D31249E98D000FC0FD3 /* WeatherViewController.swift */; };
 		3E771D34249EA53400FC0FD3 /* hawa.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E771D33249EA53400FC0FD3 /* hawa.png */; };
+		3ED8E11124AA50C300CFC129 /* QuoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED8E11024AA50C300CFC129 /* QuoteData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		3E771D2F249E960A00FC0FD3 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		3E771D31249E98D000FC0FD3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		3E771D33249EA53400FC0FD3 /* hawa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hawa.png; path = ../../../../Downloads/hawa.png; sourceTree = "<group>"; };
+		3ED8E11024AA50C300CFC129 /* QuoteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				3E771D2B249E95EC00FC0FD3 /* WeatherManager.swift */,
 				3E771D2D249E95F900FC0FD3 /* WeatherData.swift */,
 				3E771D2F249E960A00FC0FD3 /* WeatherModel.swift */,
+				3ED8E11024AA50C300CFC129 /* QuoteData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				3E771D2C249E95EC00FC0FD3 /* WeatherManager.swift in Sources */,
 				3E771D32249E98D000FC0FD3 /* WeatherViewController.swift in Sources */,
 				3E771D30249E960A00FC0FD3 /* WeatherModel.swift in Sources */,
+				3ED8E11124AA50C300CFC129 /* QuoteData.swift in Sources */,
 				3E771D15249E7AB800FC0FD3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
