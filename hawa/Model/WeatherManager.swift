@@ -15,64 +15,55 @@ protocol WeatherManagerDelegate {
 }
 
 struct WeatherManager {
-    var weatherUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&appid=9620dcab9e48cb889bc7c88236a86f19"
+    var weatherUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&appid=6e28950b9903e007a226596462252727"
+    var quoteUrl = "https://thesimpsonsquoteapi.glitch.me/quotes"
     var delegate : WeatherManagerDelegate?
     
     func fetchWeather(_ cityName : String) {
         let urlString = "\(weatherUrl)&q=\(cityName)"
         print("url: \(urlString)")
-        performRequest(urlString: urlString, param: "Weather")
+        performRequest(urlString: urlString, urlString2: quoteUrl)
     }
     
     func fetchWeather(_ lat : Double, _ lon: Double) {
         let urlString = "\(weatherUrl)&lat=\(lat)&lon=\(lon)"
         print("url: \(urlString)")
-        performRequest(urlString: urlString, param: "Weather")
+        performRequest(urlString: urlString, urlString2: quoteUrl)
     }
     
-    func fetchQuote() {
-        let urlString = "https://thesimpsonsquoteapi.glitch.me/quotes"
-        print("url: \(urlString)")
-        performRequest(urlString: urlString, param: "Quote")
-    }
-    
-    func performRequest(urlString : String, param: String){
+    func performRequest(urlString : String, urlString2 : String){
         // Create a URL
-        if let url = URL(string: urlString) {
+        if let url1 = URL(string: urlString), let url2 = URL(string: urlString2) {
             
             // Create a URLSession
             let session = URLSession(configuration: .default)
             
             //Give session a task
-            if param == "Weather" {
-                let task = session.dataTask(with: url) { (data, response, error) in
-                    if error != nil {
-                        self.delegate?.wasError(error!)
-                        return
-                    }
-                    if let safeData = data {
-                        if let weather = self.parseJSON(weatherData: safeData) {
-                            self.delegate?.updateWeather(self, weather)
-                        }
+            let task1 = session.dataTask(with: url1) { (data, response, error) in
+                if error != nil {
+                    self.delegate?.wasError(error!)
+                    return
+                }
+                if let safeData = data {
+                    if let weather = self.parseJSON(weatherData: safeData) {
+                        self.delegate?.updateWeather(self, weather)
                     }
                 }
-                //Start the task
-                task.resume()
-            } else {
-                let task = session.dataTask(with: url) { (data, response, error) in
-                    if error != nil {
-                        self.delegate?.wasError(error!)
-                        return
-                    }
-                    if let safeData = data {
-                        if let quote = self.parseJSON(quoteData: safeData) {
-                            self.delegate?.updateQuote(self, quote)
-                        }
-                    }
-                }
-                //Start the task
-                task.resume()
             }
+            let task2 = session.dataTask(with: url2) { (data, response, error) in
+                if error != nil {
+                    self.delegate?.wasError(error!)
+                    return
+                }
+                if let safeData = data {
+                    if let quote = self.parseJSON(quoteData: safeData) {
+                        self.delegate?.updateQuote(self, quote)
+                    }
+                }
+            }
+            //Start the task
+            task1.resume()
+            task2.resume()
         }
     }
     

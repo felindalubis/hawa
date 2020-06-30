@@ -11,6 +11,7 @@ import Foundation
 struct QuoteData : Decodable {
     let quote : String
     let character : String
+    let image : String
 }
 
 struct QuoteModel {

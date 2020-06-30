@@ -21,6 +21,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var humidLabel: UILabel!
     @IBOutlet weak var quoteLabel: UILabel!
     @IBOutlet weak var charLabel: UILabel!
+    @IBOutlet weak var quoteImage: UIImageView!
     
     var weatherManager = WeatherManager()
     var locationManager = CLLocationManager()
@@ -44,13 +45,18 @@ class WeatherViewController: UIViewController {
 //MARK: - UIFieldDelegate
 
 extension WeatherViewController : UITextFieldDelegate {
-    @IBAction func searchPressed(_ sender: UIButton) {        weatherManager.fetchWeather(searchTextField.text!)
-        weatherManager.fetchQuote()
-        searchTextField.endEditing(true)
+    @IBAction func searchPressed(_ sender: UIButton) {
+        if searchTextField.text != "" {
+            weatherManager.fetchWeather(searchTextField.text!)
+//            weatherManager.fetchQuote()
+            searchTextField.endEditing(true)
+        } else {
+            searchTextField.placeholder = "Please input city"
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {        weatherManager.fetchWeather(searchTextField.text!)
-        weatherManager.fetchQuote()
+//        weatherManager.fetchQuote()
         searchTextField.endEditing(true)
         return true
     }
@@ -87,6 +93,15 @@ extension WeatherViewController : WeatherManagerDelegate {
         DispatchQueue.main.async {
             self.quoteLabel.text = quote.result[0].quote
             self.charLabel.text = quote.result[0].character
+            do {
+                let url = URL(string: quote.result[0].image)
+                if let stringUrl = url {
+                    let data = try Data(contentsOf: stringUrl)
+                    self.quoteImage.image = UIImage(data: data)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -105,7 +120,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
             weatherManager.fetchWeather(lat, lon)
-            weatherManager.fetchQuote()
+//            weatherManager.fetchQuote()
         }
     }
     
